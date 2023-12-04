@@ -1,15 +1,18 @@
 import express from "express";
-import dotenv from "dotenv";
-
-dotenv.config();
+import cors from "cors";
+import { PORT } from "./utils/config";
+import todosRouter from "./controllers/todos";
 
 const app = express();
-const port = process.env.PORT ?? 8000;
+
+app.use(cors());
+app.use(express.json());
+app.use("/api/todos", todosRouter);
 
 app.get("/", (request, response) => {
   response.send("Express + TypeScript Server");
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
